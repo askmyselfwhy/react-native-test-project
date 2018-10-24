@@ -1,3 +1,3 @@
-export default photoConstants = {
+export default photosConstants = {
   UPLOAD_PHOTOS: "UPLOAD_PHOTOS"
 }

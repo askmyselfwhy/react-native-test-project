@@ -1,7 +1,8 @@
+import { photosConstants } from './../_constants/';
 export default photosActions = {
-  uploadPhotos = (photos) => {
+  uploadPhotos: (photos) => {
     return {
-      type: action_types.UPLOAD_PHOTOS,
+      type: photosConstants.UPLOAD_PHOTOS,
       payload: photos
     }
   }
