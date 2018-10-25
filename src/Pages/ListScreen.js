@@ -4,28 +4,18 @@ import Card from '../components/Card'
 
 import { connect } from 'react-redux';
 
-import { photosActions } from '../_actions';
 import { fetchPhotos } from '../_helpers';
 
 class ListScreen extends React.Component {
-  state = {
-    isLoading: true
-  }
   componentDidMount() {
-    fetchPhotos().then(photos => {
-      this.setState({ isLoading: false })
-      this.props.uploadPhotos(photos)
-    });
+    this.props.uploadPhotos();
   }
   render() {
     const { navigate } = this.props.navigation;
     let { photos } = this.props;
-    let { isLoading } = this.state;
     return (
       <ScrollView style={styles.container}>
-        {isLoading ?
-          <ActivityIndicator size="large" color="#ff0000" />
-          :
+        {photos && photos.length > 0 ?
           photos && photos.map(item =>
             <Card
               key={item.id}
@@ -36,6 +26,8 @@ class ListScreen extends React.Component {
               imgURILarge={item.urls.regular}
             />
           )
+          :
+          <ActivityIndicator size="large" color="#ff0000" />
         }
       </ScrollView>
     );
@@ -54,7 +46,7 @@ const mapStateToProps = (state) => ({
   photos: state.photos
 })
 const mapDispatchToProps = (dispatch) => ({
-  uploadPhotos: (photos) => dispatch(photosActions.uploadPhotos(photos))
+  uploadPhotos: () => dispatch(fetchPhotos())
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(ListScreen);
